@@ -3,7 +3,7 @@ name: Build Cross-Platform Executables
 # 触发条件：推送到 main 分支时
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 # 工作任务
 jobs:
