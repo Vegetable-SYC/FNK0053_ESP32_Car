@@ -50,6 +50,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         pyinstaller --onefile --noconsole --name "Freenove_Car_ESP32_Mac" \
+                    --target-arch arm64
                     --icon="image/Freenove.icns" \
                     --add-data "Client_Ui.ui:." \
                     --add-data "image:image" \
