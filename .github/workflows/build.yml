@@ -11,7 +11,7 @@ jobs:
     # 使用 strategy/matrix 在三个操作系统上并行运行
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-21.04, macos-latest, windows-latest]
 
     # 根据矩阵选择虚拟机
     runs-on: ${{ matrix.os }}
