@@ -1,10 +1,9 @@
-# 工作流名称
 name: Build Cross-Platform Executables
 
 # 触发条件：推送到 main 分支时
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 # 工作任务
 jobs:
@@ -28,23 +27,22 @@ jobs:
       with:
         python-version: '3.11' # 您可以根据需要更改版本
 
-    # 步骤 3：安装依赖 (请确保 requirements.txt 中包含 pyinstaller 和所有项目库)
+    # 步骤 3：安装依赖
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     # 步骤 4：根据不同操作系统，运行定制化的 PyInstaller 命令
-    # 这是最核心的修改部分
 
     # 4.1: Windows 打包命令
     - name: Build Windows Executable
       if: runner.os == 'Windows'
       run: |
-        pyinstaller --onefile --noconsole --name "my-app-windows" ^
-                    --icon="image/Freenove.ico" ^
-                    --add-data "Client_Ui.ui;." ^
-                    --add-data "image;image" ^
+        pyinstaller --onefile --noconsole --name "my-app-windows" `
+                    --icon="image/Freenove.ico" `
+                    --add-data "Client_Ui.ui;." `
+                    --add-data "image;image" `
                     main.py
     
     # 4.2: macOS 打包命令
@@ -66,7 +64,7 @@ jobs:
                     --add-data "image:image" \
                     main.py
 
-    # 步骤 5：上传打包好的产物，方便下载
+    # 步骤 5：上传打包好的产物
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
