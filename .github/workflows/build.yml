@@ -39,7 +39,7 @@ jobs:
     - name: Build Windows Executable
       if: runner.os == 'Windows'
       run: |
-        pyinstaller --onefile --noconsole --name "my-app-windows" `
+        pyinstaller --onefile --noconsole --name "Freenove_Car_ESP32_Windows" `
                     --icon="image/Freenove.ico" `
                     --add-data "Client_Ui.ui;." `
                     --add-data "image;image" `
@@ -49,8 +49,8 @@ jobs:
     - name: Build macOS Application
       if: runner.os == 'macOS'
       run: |
-        pyinstaller --onefile --noconsole --name "my-app-macos" \
-                    --icon="image/Freenove.icns" \
+        pyinstaller --onefile --noconsole --name "Freenove_Car_ESP32_Mac" \
+                    --icon="image/Freenove.ico" \
                     --add-data "Client_Ui.ui:." \
                     --add-data "image:image" \
                     main.py
@@ -59,7 +59,8 @@ jobs:
     - name: Build Linux Executable
       if: runner.os == 'Linux'
       run: |
-        pyinstaller --onefile --noconsole --name "my-app-linux" \
+        pyinstaller --onefile --noconsole --name "Freenove_Car_ESP32_Linux" \
+	    --icon="image/Freenove.ico" \
                     --add-data "Client_Ui.ui:." \
                     --add-data "image:image" \
                     main.py
