@@ -60,7 +60,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         pyinstaller --onefile --noconsole --name "Freenove_Car_ESP32_Linux" \
-	    --icon="image/Freenove.ico" \
+                    --icon="image/Freenove.ico" \
                     --add-data "Client_Ui.ui:." \
                     --add-data "image:image" \
                     main.py
