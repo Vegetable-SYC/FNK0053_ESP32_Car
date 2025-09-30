@@ -11,7 +11,7 @@ jobs:
     # 使用 strategy/matrix 在三个操作系统上并行运行
     strategy:
       matrix:
-        os: [ubuntu-21.04, macos-latest, windows-latest]
+        os: [ubuntu-21.04, macos-14, windows-latest]
 
     # 根据矩阵选择虚拟机
     runs-on: ${{ matrix.os }}
@@ -50,7 +50,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         pyinstaller --onefile --noconsole --name "Freenove_Car_ESP32_Mac" \
-                    --icon="image/Freenove.ico" \
+                    --icon="image/Freenove.icns" \
                     --add-data "Client_Ui.ui:." \
                     --add-data "image:image" \
                     main.py
@@ -60,7 +60,6 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         pyinstaller --onefile --noconsole --name "Freenove_Car_ESP32_Linux" \
-                    --icon="image/Freenove.ico" \
                     --add-data "Client_Ui.ui:." \
                     --add-data "image:image" \
                     main.py
