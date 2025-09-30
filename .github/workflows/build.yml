@@ -1,0 +1,56 @@
+# 工作流的名称
+name: Build Python Executables
+
+# 触发条件：当代码被推送到 main 分支时
+on:
+  push:
+    branches: [ "master" ]
+
+# 工作任务
+jobs:
+  # 任务ID，可自定义
+  build:
+    # 我们使用 "strategy" 和 "matrix" 在多个操作系统上并行运行此任务
+    strategy:
+      matrix:
+        # 定义一个变量 "os" 包含我们想要打包的所有操作系统
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        
+    # 根据 matrix 中的变量选择运行此任务的虚拟机
+    runs-on: ${{ matrix.os }}
+
+    # 任务中的具体步骤
+    steps:
+    # 第一步：检出代码
+    # 这个操作会把你的仓库代码下载到虚拟机里
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 第二步：设置Python环境
+    # 使用官方的 setup-python 动作
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11' # 你可以指定需要的Python版本
+
+    # 第三步：安装依赖项
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 第四步：使用 PyInstaller 打包
+    # 我们在这里使用 if 条件来处理不同系统下的命名差异
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller --name "my_app_for_${{ matrix.os }}" --onefile main.py
+
+    # 第五步：上传打包好的文件 (Artifact)
+    # "Artifact" 是 Actions 中用来在任务间传递或保存结果文件的机制
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        # Artifact 的名称，使用矩阵变量确保每个系统的产物名称唯一
+        name: executable-${{ matrix.os }}
+        # 要上传的文件路径
+        path: dist/
